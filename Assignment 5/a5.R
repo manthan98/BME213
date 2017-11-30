@@ -66,7 +66,7 @@ Q6_data = chap15q27NonsenseMathEffect$areaClassification
 Q6_changes = vector()
 for(i in 1:200)
 {
-  Q6_changes[i] = chap15q27NonsenseMathEffect$qualityRatingFirstAbstract[i] - chap15q27NonsenseMathEffect$qualityRatingSecondAbstract[i]
+  Q6_changes[i] = chap15q27NonsenseMathEffect$ratingAdvantageOfManipulatedAbstractOverTheOther[i]
 }
 Q6_df = data.frame(Q6_data, Q6_changes)
 Q6_model = aov(formula=Q6_changes~Q6_data)
@@ -99,10 +99,11 @@ Q8_SEr = sqrt((1-Q8_r^2)/(length(Q8_X)-2))
 cor.test(Q8_X, Q8_Y)
 
 # Q9
-Q9_X<-c(7.22, 5.82, 6.23, 5.84, 4.62, 5.05, 5.07, 4.63, 4.53, 4.27, 4.31, 4.51, 4.02, 3.18, 2.58, 2.30, 2.50, 3.40)
-Q9_Y<-c(1.65, 1.20, 1.21, 0.98, 1.22, 0.97, 1.02, 1.09, 0.84, 1.15, 1.20, 1.14, 1.12, 0.51, 0.63, 0.46, 0.60, 0.64)
+Q9_X<-c(5.82, 6.23, 5.84, 4.62, 5.05, 5.07, 4.63, 4.53, 4.27, 4.31, 4.51, 4.02, 3.18, 2.58, 2.30, 2.50, 3.40)
+Q9_Y<-c(1.20, 1.21, 0.98, 1.22, 0.97, 1.02, 1.09, 0.84, 1.15, 1.20, 1.14, 1.12, 0.51, 0.63, 0.46, 0.60, 0.64)
 Q9_r = cov(Q9_X, Q9_Y) / (sd(Q9_X)*sd(Q9_Y))
 
 # Part A.
-Q9_b = (Q9_r*sd(Q9_Y)) / sd(Q9_X)
-Q9_a = mean(Q9_Y) - Q9_b*mean(Q9_X)
+model = lm(Q9_Y~Q9_X)
+newdata = data.frame(Q9_X=c(7.22))
+predict(model, newdata, interval = "p")
